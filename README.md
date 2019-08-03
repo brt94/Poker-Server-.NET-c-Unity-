@@ -19,3 +19,10 @@ ToDo<br>
 POO Structure<br>
 EncriptCommunication<br>
 <hr>
+#WHY I DO THIS?
+
+99% of the poker apps that are there have a predefined number of hands that u play without knowing 
+here we have a card shuffling and a hand comparer so players will feel, closer to real world poker.
+(unibet 888 and pokerstars).
+U know when u have A Q and the other J 3 u get 2 pairs and oponent Flush...That is predefined
+
