@@ -5,7 +5,7 @@ Verstion 0.0000000000001
 Everything is totaly messed up, any help is or ideea is welcomed
 
 
-Check The Client HERE : 
+Check The Client HERE : https://github.com/brt94/PokerClient
 
 This was a 1 day job so i tried to cover multiple aspects 
 
