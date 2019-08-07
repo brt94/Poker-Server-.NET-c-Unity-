@@ -1,3 +1,13 @@
+7/AUG/2019
+#Incomming update news <br>
+Login Server ->No Update<br>
+GameServer -> Smaller Packet size <br>
+TableServer->25%  Turn Taking Finished<br>
+
+Unity Client BackDev - 20%
+Unity Client FrontDev - 1%
+
+
 # PokerServer
 Publish Test - The Project is splited out badly
 
@@ -11,7 +21,7 @@ This was a 1 day job so i tried to cover multiple aspects
 <br>
 TODO & Percentage<br>
 Login Server -> 10%<br>
-GameServer ->10$<br>
+GameServer ->10%<br>
 TableServer->0%  <br>
 ClientComms->0%<br>
 <br><br>
