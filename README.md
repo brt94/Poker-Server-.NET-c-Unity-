@@ -1,5 +1,5 @@
-7/AUG/2019
-#Incomming update news <br>
+7/AUG/2019<br>
+# Incomming update news <br>
 Login Server ->No Update<br>
 GameServer -> Smaller Packet size <br>
 TableServer->25%  Turn Taking Finished<br>
