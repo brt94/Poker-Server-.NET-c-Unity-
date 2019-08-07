@@ -4,6 +4,8 @@ Login Server ->No Update<br>
 GameServer -> Smaller Packet size <br>
 TableServer->25%  Turn Taking Finished<br>
 
+POO -> Starting on adding Events for a better PACKAGE manipulation. 
+
 Unity Client BackDev - 20%
 Unity Client FrontDev - 1%
 
