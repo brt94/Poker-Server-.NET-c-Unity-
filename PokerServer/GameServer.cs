@@ -36,68 +36,66 @@ namespace PokerServer
                         if (r > 1)
                         {
                             string str = Encoding.ASCII.GetString(buffer);
-                            string[] cmd = str.Split(':');
+                            //if (str.Contains("<eof>"))
+                            //{
+                                string[] cmd = str.Split(':');
+                                switch (cmd[0])
+                                {
+                                    case "cn":
+                                        {
+                                            client.Name = cmd[1];
+                                            break;
+                                        }
+                                    case "play":
+                                        {
+                                            Console.WriteLine("PLAY");
+                                            var args = cmd[1].Split('.');
+                                            TableConfig tc = new TableConfig();
+                                            tc.buyin = int.Parse(args[0]);
+                                            tc.seats = int.Parse(args[1]);
+                                            MatchMaking.Queue.Add(client, tc);
+                                            Console.WriteLine("Finding Table for" + client.dlinq.UID);
 
-                            switch (cmd[0])
-                            {
-                                case "changename":
-                                    {
-                                        client.Name = cmd[1];
+                                            break;
+                                        }
+                                    case "bet":
+                                        if (client.isTurn)
+                                        {
+                                            client.Bet(int.Parse(cmd[1]));
+                                        }
                                         break;
-                                    }
-                                case "play":
-                                    {
-                                        Console.WriteLine("PLAY");
-                                        var args = cmd[1].Split('.');
-                                        TableConfig tc = new TableConfig();
-                                        tc.buyin = int.Parse(args[0]);
-                                        tc.seats = int.Parse(args[1]);
-                                        MatchMaking.Queue.Add(client, tc);
-                                        Console.WriteLine("Finding Table for" + client.dlinq.UID);
-
+                                    case "raise":
+                                        if (client.isTurn)
+                                        {
+                                            client.Bet(int.Parse(cmd[1]));
+                                        }
                                         break;
-                                    }
-                                case "bet":
-                                    if (client.isTurn)
-                                    {
-                                        client.Bet(int.Parse(cmd[1]));
-                                    }
-                                    break;
-                                case "raise":
-                                    if (client.isTurn)
-                                    {
-                                        client.Bet(int.Parse(cmd[1]));
-                                    }
-                                    break;
-                                case "call":
-                                    if (client.isTurn)
-                                    {
-                                        client.Call();
-                                    }
-                                    break;
-                                case "fold":
-                                    if (client.isTurn)
-                                    {
-                                        client.FoldCards(bool.Parse(cmd[1]));
-                                    }
-                                    break;
-                                case "check":
-                                    if (client.isTurn)
-                                    {
-                                        client.Check();
-                                    }                                   
-                                    break;
-                                case "active":
-                                    if (client.isTurn)
-                                    {
+                                    case "call":
+                                        if (client.isTurn)
+                                        {
+                                            client.Call();
+                                        }
+                                        break;
+                                    case "fold":
+                                        if (client.isTurn)
+                                        {
+                                            client.FoldCards(bool.Parse(cmd[1]));
+                                        }
+                                        break;
+                                    case "check":
+                                        if (client.isTurn)
+                                        {
+                                            client.Check();
+                                        }
+                                        break;
+                                    case "active":
                                         client.isActive = true;
-                                    }
-                                    break;
-                                    //menuShits;
+                                        break;
+                                        //menuShits;
+                                }
                             }
 
-
-                        }
+                        //}
                     }
                     else
                     {

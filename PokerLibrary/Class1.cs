@@ -8,5 +8,7 @@ namespace PokerLibrary
 {
     public class Class1
     {
+        //Here Will Be The HandComparison Algorithm
+
     }
 }

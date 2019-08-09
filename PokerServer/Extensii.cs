@@ -9,14 +9,14 @@ namespace PokerServer
 {
     public static class Extensii
     {
-        public static void Clear2(this List<Card> cards)
+        public static void Clear2(this Card[] cards)
         {
-            Card nl = new Card() { Culoare = Color.InimaNeagra, Numar = 0 };
-            for (int i = 0; i < cards.Count; i++)
+            //Card nl = new Card() { Culoare = Color.InimaNeagra, Numar = 0 };
+            for (int i = 0; i < cards.Length; i++)
             {
-                cards[i] = nl;
+                cards[i] = Card.Null;
             }
-            cards.Clear();
+           // cards.Clear();
         }
     }
 }

@@ -9,7 +9,7 @@ namespace PokerServer
         public int seats = 6;
         public int bigblind = 50;
         public int ante;
-        public int handTime = 5;
+        public int handTime = 20;
 
         internal bool SimilarTo(TableConfig tc)
         {

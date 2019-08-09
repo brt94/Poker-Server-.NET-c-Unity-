@@ -31,7 +31,7 @@ namespace PokerServer.VisiualPart
         public Table masa;
         public PlayerVisualizer()//(Client _client,Table _masa)
         {
-           // Enabled = false;
+            //Enabled = false;
             InitializeComponent();
             // client = _client;
             // masa = _masa;
@@ -90,7 +90,7 @@ namespace PokerServer.VisiualPart
 
         private void button4_Click(object sender, EventArgs e)
         {
-            client.ImBack();
+            //client.ImBack();
         }
     }
 }

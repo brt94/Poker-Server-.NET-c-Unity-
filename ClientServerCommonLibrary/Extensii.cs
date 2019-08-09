@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+//using System.Threading.Tasks;
 
 namespace ClientServerCommonLibrary
 {
@@ -20,7 +20,13 @@ namespace ClientServerCommonLibrary
         public static Card ToCard(this string str)
         {
             var q = str.Split('.');
-            return new Card() {Culoare = (Color)(int.Parse(q[1])),Numar = int.Parse(q[0])};
+            return new Card() {Culoare = (Color)(int.Parse(q[0])),Numar = int.Parse(q[1])};
         }
+        
+        //public static Card Max(this List<Card> cards)
+        //{
+        //    //var o = (from c in cards where c.Numar > 1 select c.Numar).Max();
+        //    return new Card();
+        //}
     }
 }

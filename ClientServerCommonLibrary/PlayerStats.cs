@@ -2,20 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+//using System.Threading.Tasks;
 
 namespace ClientServerCommonLibrary
 {
-    class PlayerStats
+    public class PlayerStats
     {
-        public long Money;
+        public int Money = 1500;
         public long clientUID;
-        public string Name = "Cosmin";
 
-        public override string ToString()
-        {
-            return clientUID+":"+Name+":"+Money+":";
-        }
+        public string Name { get; internal set; }
+        // public string Name = "";
+
+        //public override string ToString()
+        //{
+        //    return clientUID+":"+Money+":";
+        //}
 
     }
 }

@@ -31,13 +31,26 @@ namespace PokerServer
             {
                 if (value == true)
                 {
-                    sendMsg("Is your turn");
+                    //sendMsg("Is your turn");
                 }
                 else
                 {
-                    sendMsg("Turn over");
+                   // sendMsg("Turn over");
                 }
                 isTurn = value;
+            }
+        }
+        private handStrenght hs= new handStrenght();
+        public handStrenght HandStrenght
+        {
+            get
+            {
+                return hs;
+            }
+            set
+            {
+                hs = value;
+                base.handStrenght = hs.Strenght;
             }
         }
 
@@ -57,8 +70,8 @@ namespace PokerServer
             {
                 card1 = card;
                 if (Soket.Connected)
-                {
-                    string data = "setcard:1." + card1.Culoare + "#" + card1.Numar;
+                {                   //cmd0:cmd1:cm.d2
+                    string data = "$setcard:1:" + card1.Culoare + "." + card1.Numar+"$";
                     byte[] byteData = Encoding.ASCII.GetBytes(data);
                     Soket.Send(byteData);
                 }
@@ -68,7 +81,7 @@ namespace PokerServer
                 card2 = card;
                 if (Soket.Connected)
                 {
-                    string data = "setcard:2." + card2.Culoare + "#" + card2.Numar;
+                    string data = "$setcard:2:" + card2.Culoare + "." + card2.Numar + "$";
                     byte[] byteData = Encoding.ASCII.GetBytes(data);
                     Soket.Send(byteData);
                 }
@@ -84,21 +97,29 @@ namespace PokerServer
             //throw new NotImplementedException();
         }
 
-        internal void FoldCards(bool inactive = false)
+        internal void FoldCards(bool inactive = false,bool endofRound = false)
         {
-            //nextAction = null;
             folded = true;
-            tookDecision = true;
+            //nextAction = null;
+            if (endofRound == false)
+            {               
+                tookDecision = true;
+            }
+            else
+            {
+                card1 = Card.Null;
+                card2 = Card.Null;
+            }
             //sendMsg("Inactive Fold");
             if (inactive)
                 isActive = false;
         }
 
-        internal void Update(bool showcards = true)
+        internal string Update(bool showcards = true)
         {
             if (masa == null)
-                return;
-            string ss = "update:";
+                return "";
+            string ss = "$update:";
             //int cnt = 0;
             if (masa.Clienti.Length > 1)
             {
@@ -109,13 +130,13 @@ namespace PokerServer
                     {
                         if (q != this)
                         {
-                            
+
                             if (!showcards)
                                 ss += "|" + i + ":" + q.ToString(true);
                             else
                                 ss += "|" + i + ":" + q.ToString(false);
-                           
-                            
+
+
                         }
                     }
                     else
@@ -123,24 +144,22 @@ namespace PokerServer
                         continue;
                     }
                 }
-                string data = ss;
-                byte[] byteData = Encoding.ASCII.GetBytes(data);
-                Soket.Send(byteData);
-                Thread.Sleep(100);
             }
+            return ss + "$";
         }
-        internal void UpdateSelf()
+        internal string UpdateSelf()
         {
-            string ss = "";
-            ss += "updateSelf:"+tableSeat +":"+ this.ToString(true);
-            string data = ss;
-            byte[] byteData = Encoding.ASCII.GetBytes(data);
-            Soket.Send(byteData);
+
+            string ss = "$";
+            ss += "updateSelf:" + tableSeat + ":" + this.ToString(true);
+            string data = ss + "$";
+
+            return data;
         }
 
         internal void Bet(int v)
         {         
-            dlinq.Money -= v;
+            Cash -= v;
             onhandBet += v;
             masa.bigBet = onhandBet;
             tookDecision = true;
@@ -148,10 +167,11 @@ namespace PokerServer
 
         internal void Call()
         {
-            masa.bigBet -= onhandBet;
-            dlinq.Money -= masa.bigBet -= onhandBet;            
-            onhandBet += masa.bigBet -= onhandBet;
-            masa.bigBet = onhandBet;
+            //masa.bigBet -= onhandBet;  
+            int a = masa.bigBet - onhandBet;
+            onhandBet = masa.bigBet;
+            Cash -= a;
+            //masa.bigBet = onhandBet;
             tookDecision = true;
         }
 
@@ -170,19 +190,33 @@ namespace PokerServer
 
         public Client()
         {
-            Thread Update_ = new Thread(() =>
-            {
-                while (true)
-                {
-                    UpdateSelf();
-                    Thread.Sleep(100);
-                    Update();
-                    Thread.Sleep(300);
+            
+                  
                    
-                }
-            });
-            Update_.Start();
+                   
+             
         }
 
+        internal void UpdateTable()
+        {            
+            string ss = "$" + UpdateSelf() + Update();
+            ss += "$ut:";
+            
+                foreach (var c in masa.TableCards)
+                {
+                    ss += c.ToString() + ":";
+                }
+            
+            string data = ss + "$<eof>";
+            byte[] byteData = Encoding.ASCII.GetBytes(data);
+            try
+            {
+                Soket.Send(byteData);
+            }
+            catch
+            {
+                //skip till it work
+            }
+        }
     }
 }
